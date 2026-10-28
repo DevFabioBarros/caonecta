@@ -1,53 +1,20 @@
 # Caonecta
 
-Aplicação web para adoção responsável de animais. A plataforma permite cadastrar animais e usuários, pesquisar animais disponíveis e acompanhar solicitações de adoção. Também inclui área administrativa para gerenciar cadastros e consultar o histórico.
+O Caonecta aproxima pessoas que querem adotar de animais que precisam de um lar. A plataforma organiza as informações dos animais e acompanha as solicitações para tornar a busca e o processo de adoção mais simples.
 
-## Funcionalidades
+## O que você pode fazer
 
-- Cadastro e autenticação de usuários.
-- Perfil e consulta dos próprios cadastros de animais.
-- Cadastro e pesquisa de animais.
-- Solicitação de adoção e acompanhamento das solicitações.
-- Administração de animais, usuários e solicitações.
-- Envio e exibição de imagens dos animais.
+- Conhecer animais disponíveis e pesquisar opções.
+- Consultar informações e fotos de cada animal.
+- Criar uma conta e manter um perfil de usuário.
+- Enviar solicitações de adoção e acompanhar seu andamento.
+- Cadastrar animais para adoção e consultar os próprios cadastros.
+- Usar a área administrativa para organizar animais, usuários e solicitações.
 
-## Tecnologias
+## Para quem é
 
-- Java 24
-- Spring Boot 3.5.0
-- Spring Web e Thymeleaf
-- Spring JDBC
-- MySQL Connector/J
-- Maven
+Para pessoas interessadas em adotar e para quem precisa divulgar animais e acompanhar os pedidos recebidos.
 
-## Requisitos
+## Como funciona
 
-- JDK 24.
-- Maven 3.9 ou compatível.
-- MySQL 8 em execução.
-
-## Configurar o banco
-
-Crie um banco chamado `caonecta` no MySQL. A configuração padrão em `src/main/resources/application.properties` usa `localhost:3306`, usuário `root` e senha vazia. Altere `spring.datasource.url`, `spring.datasource.username` e `spring.datasource.password` conforme seu ambiente. Não use credenciais reais em commits.
-
-## Executar
-
-Na raiz do projeto:
-
-```bash
-mvn spring-boot:run
-```
-
-Acesse `http://localhost:8080` no navegador. O servidor aceita imagens de até 10 MB por arquivo e requisição. Os arquivos enviados ficam em `uploads/animais/`.
-
-## Estrutura
-
-- `src/main/java/com/caonecta`: controladores, serviços, DAOs, modelos e utilitários.
-- `src/main/resources/templates`: páginas Thymeleaf.
-- `src/main/resources/static`: CSS e outros arquivos estáticos.
-- `src/main/resources/application.properties`: configuração da aplicação e do banco.
-- `uploads/animais`: imagens de exemplo usadas pelo projeto.
-
-## Licença
-
-Nenhuma licença foi definida. Consulte o autor antes de reutilizar ou distribuir o projeto.
+A pessoa interessada encontra um animal, consulta seu perfil e envia uma solicitação. As solicitações podem ser acompanhadas pelo usuário e gerenciadas pela área administrativa.
