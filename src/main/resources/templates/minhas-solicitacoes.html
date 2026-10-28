@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Minhas Solicitações</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+
+<main class="page page-list">
+    <section class="card list-card">
+        <h1>Minhas Solicitações</h1>
+
+        <div class="top-links">
+            <div>
+                <a class="link" href="/pesquisar-animal">Pesquisar animais</a>
+                <a class="link" href="/cadastrar-animal">Cadastrar animal</a>
+                <a class="link" href="/meus-cadastros-animais">Meus cadastros</a>
+                <a class="link" href="/perfil">Meu perfil</a>
+                <a class="link" href="/logout">Sair</a>
+            </div>
+        </div>
+
+        <div class="admin-list">
+            <div class="admin-item" th:each="solicitacao : ${solicitacoes}">
+                <img class="admin-thumb" th:src="${solicitacao.animal.urlFoto}" alt="Animal">
+
+                <div>
+                    <strong th:text="${solicitacao.animal.nome}">Animal</strong>
+
+                    <p>
+                        <strong>Status:</strong>
+                        <span th:text="${solicitacao.statusSolicitacao}"></span>
+                    </p>
+
+                    <p th:if="${solicitacao.statusSolicitacao.name() == 'APROVADA'}">
+                        Parabéns! Sua solicitação de adoção do
+                        <strong th:text="${solicitacao.animal.nome}"></strong>
+                        foi aprovada. Em breve o administrador entrará em contato.
+                    </p>
+
+                    <p th:if="${solicitacao.statusSolicitacao.name() == 'REJEITADA'}">
+                        Sua solicitação não foi aprovada neste momento.
+                    </p>
+
+                    <p th:if="${solicitacao.statusSolicitacao.name() == 'PENDENTE'}">
+                        Sua solicitação ainda está aguardando avaliação.
+                    </p>
+
+                    <p th:if="${solicitacao.statusSolicitacao.name() == 'CANCELADA'}">
+                        Esta solicitação foi cancelada por você.
+                    </p>
+                </div>
+
+                <form th:if="${solicitacao.statusSolicitacao.name() == 'PENDENTE'}"
+                      action="/minhas-solicitacoes/cancelar"
+                      method="post">
+                    <input type="hidden" name="solicitacaoId" th:value="${solicitacao.id}">
+                    <button class="button danger" type="submit">Cancelar solicitação</button>
+                </form>
+            </div>
+        </div>
+
+        <p class="subtitle" th:if="${#lists.isEmpty(solicitacoes)}">
+            Você ainda não enviou solicitações de adoção.
+        </p>
+    </section>
+</main>
+
+</body>
+</html>

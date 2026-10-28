@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Detalhes do Usuário</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+
+<main class="page">
+    <section class="card">
+        <h1>Detalhes do Usuário</h1>
+
+        <p><strong>Nome:</strong> <span th:text="${usuario.nomeCompleto}"></span></p>
+        <p><strong>Email:</strong> <span th:text="${usuario.email}"></span></p>
+        <p><strong>CPF:</strong> <span th:text="${usuario.cpf}"></span></p>
+        <p><strong>Telefone:</strong> <span th:text="${usuario.telefone}"></span></p>
+        <p><strong>Tipo:</strong> <span th:text="${usuario.tipoUsuario}"></span></p>
+        <p><strong>Ativo:</strong> <span th:text="${usuario.ativo ? 'Sim' : 'Não'}"></span></p>
+        <p><strong>Aprovado:</strong> <span th:text="${usuario.aprovado ? 'Sim' : 'Não'}"></span></p>
+
+        <h2>Endereço</h2>
+
+        <p><strong>CEP:</strong> <span th:text="${usuario.endereco.cep}"></span></p>
+        <p><strong>Rua:</strong> <span th:text="${usuario.endereco.rua}"></span></p>
+        <p><strong>Número:</strong> <span th:text="${usuario.endereco.numero}"></span></p>
+        <p><strong>Bairro:</strong> <span th:text="${usuario.endereco.bairro}"></span></p>
+        <p><strong>Cidade:</strong> <span th:text="${usuario.endereco.cidade}"></span></p>
+        <p><strong>Complemento:</strong> <span th:text="${usuario.endereco.complemento}"></span></p>
+
+        <div class="actions">
+            <form action="/admin/usuario/aprovar" method="post" th:if="${!usuario.aprovado}">
+                <input type="hidden" name="usuarioId" th:value="${usuario.id}">
+                <button class="button" type="submit">Aprovar usuário</button>
+            </form>
+
+            <form action="/admin/usuario/rejeitar" method="post" th:if="${usuario.ativo}">
+                <input type="hidden" name="usuarioId" th:value="${usuario.id}">
+                <button class="button danger" type="submit">Rejeitar usuário</button>
+            </form>
+
+            <a class="link" href="/admin">Voltar ao painel</a>
+        </div>
+    </section>
+</main>
+
+</body>
+</html>

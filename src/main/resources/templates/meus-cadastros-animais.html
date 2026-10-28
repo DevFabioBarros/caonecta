@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Meus Cadastros de Animais</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+
+<main class="page page-list">
+    <section class="card list-card">
+        <h1>Meus Cadastros de Animais</h1>
+
+        <div class="top-links">
+            <div>
+                <a class="link" href="/pesquisar-animal">Pesquisar animais</a>
+                <a class="link" href="/cadastrar-animal">Cadastrar animal</a>
+                <a class="link" href="/minhas-solicitacoes">Minhas solicitações</a>
+                <a class="link" href="/perfil">Meu perfil</a>
+                <a class="link" href="/logout">Sair</a>
+            </div>
+        </div>
+
+        <div class="admin-list">
+            <div class="admin-item" th:each="animal : ${animais}">
+                <img class="admin-thumb" th:src="${animal.urlFoto}" alt="Animal">
+
+                <div>
+                    <strong th:text="${animal.nome}">Animal</strong>
+
+                    <p><strong>Espécie:</strong> <span th:text="${animal.especie}"></span></p>
+                    <p><strong>Raça:</strong> <span th:text="${animal.raca}"></span></p>
+
+                    <p th:if="${!animal.aprovado}">
+                        <strong>Status:</strong> aguardando validação do administrador.
+                    </p>
+
+                    <p th:if="${animal.aprovado && !animal.adotado}">
+                        <strong>Status:</strong> aprovado e disponível para adoção.
+                    </p>
+
+                    <p th:if="${animal.aprovado && animal.adotado}">
+                        <strong>Status:</strong> aprovado e já adotado.
+                    </p>
+                </div>
+
+                <form th:if="${!animal.aprovado}"
+                      action="/meus-cadastros-animais/cancelar"
+                      method="post">
+                    <input type="hidden" name="animalId" th:value="${animal.id}">
+                    <button class="button danger" type="submit">Cancelar cadastro</button>
+                </form>
+            </div>
+        </div>
+
+        <p class="subtitle" th:if="${#lists.isEmpty(animais)}">
+            Você ainda não cadastrou nenhum animal.
+        </p>
+    </section>
+</main>
+
+</body>
+</html>

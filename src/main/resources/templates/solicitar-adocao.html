@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Solicitar Adoção</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+
+<main class="page">
+    <section class="card compact-card">
+
+        <h1>Solicitar Adoção</h1>
+
+        <p class="erro" th:if="${erro}" th:text="${erro}"></p>
+
+        <div class="animal-preview-vertical">
+
+            <img th:src="${animal.urlFoto}" alt="Foto do animal">
+
+            <div class="animal-info">
+                <h2 th:text="${animal.nome}">Nome</h2>
+
+                <p>
+                    <strong>Espécie:</strong>
+                    <span th:text="${animal.especie}"></span>
+                </p>
+
+                <p>
+                    <strong>Raça:</strong>
+                    <span th:text="${animal.raca}"></span>
+                </p>
+
+                <p>
+                    <strong>Idade:</strong>
+
+                    <span th:text="${animal.idade == -1 ?
+                    'Não conhecida' :
+                    animal.idade + ' ano(s)'}"></span>
+                </p>
+
+                <p class="descricao" th:text="${animal.descricao}">
+                    Descrição do animal
+                </p>
+            </div>
+        </div>
+
+        <form action="/solicitar-adocao" method="post">
+
+            <input type="hidden" name="usuarioId" value="2">
+            <input type="hidden" name="animalId" th:value="${animal.id}">
+
+            <label for="justificativa">
+                Justificativa da adoção
+            </label>
+
+            <textarea
+                    id="justificativa"
+                    name="justificativa"
+                    rows="4"
+                    required
+                    placeholder="Explique por que deseja adotar este animal."></textarea>
+
+            <div class="actions">
+                <button class="button" type="submit">
+                    Confirmar solicitação
+                </button>
+
+                <a class="link" th:href="@{/visualizar-animal(animalId=${animal.id})}">
+                    Cancelar
+                </a>
+            </div>
+        </form>
+
+    </section>
+</main>
+
+</body>
+</html>

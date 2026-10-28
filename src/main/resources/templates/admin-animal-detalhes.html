@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Detalhes do Animal</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+
+<main class="page">
+    <section class="card">
+
+        <div class="top-links">
+            <div>
+                <a class="link" href="/admin">Painel administrativo</a>
+                <a class="link" href="/pesquisar-animal">Pesquisar animais</a>
+                <a class="link" href="/logout">Sair</a>
+            </div>
+        </div>
+
+        <div class="animal-preview-vertical">
+            <img th:src="${animal.urlFoto}" alt="Foto do animal">
+
+            <div class="animal-info">
+                <h1 th:text="${animal.nome}">Nome</h1>
+
+                <p><strong>Espécie:</strong> <span th:text="${animal.especie}"></span></p>
+                <p><strong>Raça:</strong> <span th:text="${animal.raca}"></span></p>
+
+                <p>
+                    <strong>Idade:</strong>
+                    <span th:text="${animal.idade == null ? 'Não conhecida' : animal.idade + ' ano(s)'}"></span>
+                </p>
+
+                <p><strong>Aprovado:</strong> <span th:text="${animal.aprovado ? 'Sim' : 'Não'}"></span></p>
+                <p><strong>Adotado:</strong> <span th:text="${animal.adotado ? 'Sim' : 'Não'}"></span></p>
+
+                <p class="descricao" th:text="${animal.descricao}"></p>
+            </div>
+        </div>
+
+        <h2>Cadastrado por</h2>
+
+        <p th:if="${animal.usuario != null}">
+            <strong>Nome:</strong>
+            <span th:text="${animal.usuario.nomeCompleto}"></span>
+        </p>
+
+        <p th:if="${animal.usuario != null}">
+            <strong>Email:</strong>
+            <span th:text="${animal.usuario.email}"></span>
+        </p>
+
+        <p th:if="${animal.usuario != null}">
+            <strong>Telefone:</strong>
+            <span th:text="${animal.usuario.telefone}"></span>
+        </p>
+
+        <p th:if="${animal.usuario == null}">
+            Cadastrante não informado.
+        </p>
+
+        <div class="actions">
+            <form th:if="${!animal.aprovado}" action="/admin/animal/aprovar" method="post">
+                <input type="hidden" name="animalId" th:value="${animal.id}">
+                <button class="button" type="submit">Aprovar animal</button>
+            </form>
+
+            <form th:if="${!animal.aprovado}" action="/admin/animal/rejeitar" method="post">
+                <input type="hidden" name="animalId" th:value="${animal.id}">
+                <button class="button danger" type="submit">Rejeitar animal</button>
+            </form>
+
+            <a class="link" href="/admin">Voltar ao painel</a>
+        </div>
+    </section>
+</main>
+
+</body>
+</html>

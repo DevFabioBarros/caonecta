@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Visualizar Animal</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+
+<main class="page">
+    <section class="card">
+
+        <div class="top-links">
+
+            <!-- ADMIN -->
+            <div th:if="${session.tipoUsuario != null && session.tipoUsuario.name() == 'ADMINISTRADOR'}">
+                <a class="link" href="/admin">Painel administrativo</a>
+                <a class="link" href="/pesquisar-animal">Pesquisar animais</a>
+                <a class="link" href="/logout">Sair</a>
+            </div>
+
+            <!-- USUÁRIO -->
+            <div th:if="${session.tipoUsuario != null && session.tipoUsuario.name() == 'USUARIO'}">
+                <a class="link" href="/perfil">Meu perfil</a>
+                <a class="link" href="/cadastrar-animal">Cadastrar animal</a>
+                <a class="link" href="/minhas-solicitacoes">Minhas solicitações</a>
+                <a class="link" href="/logout">Sair</a>
+            </div>
+
+            <!-- VISITANTE -->
+            <div th:if="${session.tipoUsuario == null}">
+                <a class="link" href="/login">Entrar</a>
+                <a class="link" href="/cadastro-usuario">Criar conta</a>
+            </div>
+
+        </div>
+
+        <div class="animal-preview-vertical">
+            <img th:src="${animal.urlFoto}" alt="Foto do animal">
+
+            <div class="animal-info">
+                <h1 th:text="${animal.nome}">Nome do animal</h1>
+
+                <p><strong>Espécie:</strong> <span th:text="${animal.especie}"></span></p>
+                <p><strong>Raça:</strong> <span th:text="${animal.raca}"></span></p>
+
+                <p>
+                    <strong>Idade:</strong>
+                    <span th:text="${animal.idade == null ? 'Não conhecida' : animal.idade + ' ano(s)'}"></span>
+                </p>
+
+                <p class="descricao" th:text="${animal.descricao}"></p>
+            </div>
+        </div>
+
+        <div class="actions">
+            <a class="button" th:href="@{/solicitar-adocao(animalId=${animal.id})}">
+                Solicitar adoção
+            </a>
+
+            <a class="link" href="/pesquisar-animal">
+                Voltar para pesquisa
+            </a>
+        </div>
+    </section>
+</main>
+
+</body>
+</html>

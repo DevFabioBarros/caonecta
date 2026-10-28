@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Detalhes da Solicitação</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+
+<main class="page">
+    <section class="card">
+        <h1>Detalhes da Solicitação</h1>
+
+        <div class="animal-preview-vertical">
+            <img th:src="${solicitacao.animal.urlFoto}" alt="Animal">
+
+            <div class="animal-info">
+                <h2 th:text="${solicitacao.animal.nome}">Animal</h2>
+
+                <p><strong>Espécie:</strong> <span th:text="${solicitacao.animal.especie}"></span></p>
+                <p><strong>Raça:</strong> <span th:text="${solicitacao.animal.raca}"></span></p>
+
+                <p>
+                    <strong>Idade:</strong>
+                    <span th:text="${solicitacao.animal.idade == -1 ? 'Não conhecida' : solicitacao.animal.idade + ' ano(s)'}"></span>
+                </p>
+            </div>
+        </div>
+
+        <h2>Solicitante</h2>
+
+        <p><strong>Nome:</strong> <span th:text="${solicitacao.usuario.nomeCompleto}"></span></p>
+        <p><strong>Email:</strong> <span th:text="${solicitacao.usuario.email}"></span></p>
+        <p><strong>Telefone:</strong> <span th:text="${solicitacao.usuario.telefone}"></span></p>
+
+        <h2>Solicitação</h2>
+
+        <p><strong>Justificativa:</strong> <span th:text="${solicitacao.justificativa}"></span></p>
+
+        <div class="actions">
+            <form action="/admin/solicitacao/aprovar" method="post">
+                <input type="hidden" name="solicitacaoId" th:value="${solicitacao.id}">
+                <button class="button" type="submit">Aprovar</button>
+            </form>
+
+            <form action="/admin/solicitacao/rejeitar" method="post">
+                <input type="hidden" name="solicitacaoId" th:value="${solicitacao.id}">
+                <button class="button danger" type="submit">Rejeitar</button>
+            </form>
+
+            <a class="link" href="/admin">Voltar</a>
+        </div>
+    </section>
+</main>
+
+</body>
+</html>

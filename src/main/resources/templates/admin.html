@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Painel Administrativo</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+
+<main class="page page-list">
+    <section class="card list-card">
+        <h1>Painel Administrativo</h1>
+
+        <div class="top-links">
+            <a class="link" href="/admin">Painel administrativo</a>
+            <a class="link" href="/admin/historico">Histórico</a>
+            <a class="link" href="/pesquisar-animal">Pesquisar animais</a>
+            <a class="link" href="/logout">Sair</a>
+        </div>
+
+        <h2>Usuários pendentes</h2>
+
+        <div class="admin-list">
+            <div class="admin-item" th:each="usuario : ${usuariosPendentes}">
+                <div>
+                    <strong th:text="${usuario.nomeCompleto}"></strong>
+                    <p th:text="${usuario.email}"></p>
+                    <p th:text="${usuario.telefone}"></p>
+
+                    <a class="link" th:href="@{/admin/usuario/detalhes(usuarioId=${usuario.id})}">
+                        Ver detalhes
+                    </a>
+                </div>
+
+                <form action="/admin/usuario/aprovar" method="post">
+                    <input type="hidden" name="usuarioId" th:value="${usuario.id}">
+                    <button class="button" type="submit">Aprovar</button>
+                </form>
+
+                <form action="/admin/usuario/rejeitar" method="post">
+                    <input type="hidden" name="usuarioId" th:value="${usuario.id}">
+                    <button class="button danger" type="submit">Rejeitar</button>
+                </form>
+            </div>
+        </div>
+
+        <p class="subtitle" th:if="${#lists.isEmpty(usuariosPendentes)}">
+            Nenhum usuário pendente.
+        </p>
+
+        <h2>Animais pendentes</h2>
+
+        <div class="admin-list">
+            <div class="admin-item" th:each="animal : ${animaisPendentes}">
+                <img class="admin-thumb" th:src="${animal.urlFoto}" alt="Animal">
+
+                <div>
+                    <strong th:text="${animal.nome}"></strong>
+                    <p th:text="${animal.especie}"></p>
+                    <p th:text="${animal.raca}"></p>
+
+                    <a class="link" th:href="@{/admin/animal/detalhes(animalId=${animal.id})}">
+                        Ver detalhes
+                    </a>
+                </div>
+
+                <form action="/admin/animal/aprovar" method="post">
+                    <input type="hidden" name="animalId" th:value="${animal.id}">
+                    <button class="button" type="submit">Aprovar</button>
+                </form>
+
+                <form action="/admin/animal/rejeitar" method="post">
+                    <input type="hidden" name="animalId" th:value="${animal.id}">
+                    <button class="button danger" type="submit">Rejeitar</button>
+                </form>
+            </div>
+        </div>
+
+        <p class="subtitle" th:if="${#lists.isEmpty(animaisPendentes)}">
+            Nenhum animal pendente.
+        </p>
+
+        <h2>Solicitações de adoção pendentes</h2>
+
+        <div class="admin-list">
+            <div class="admin-item" th:each="solicitacao : ${solicitacoesPendentes}">
+                <img class="admin-thumb" th:src="${solicitacao.animal.urlFoto}" alt="Animal">
+
+                <div>
+                    <strong th:text="${solicitacao.animal.nome}"></strong>
+
+                    <p>
+                        <strong>Solicitante:</strong>
+                        <span th:text="${solicitacao.usuario.nomeCompleto}"></span>
+                    </p>
+
+                    <p>
+                        <strong>Justificativa:</strong>
+                        <span th:text="${solicitacao.justificativa}"></span>
+                    </p>
+
+                    <a class="link" th:href="@{/admin/solicitacao/detalhes(solicitacaoId=${solicitacao.id})}">
+                        Ver detalhes
+                    </a>
+                </div>
+
+                <form action="/admin/solicitacao/aprovar" method="post">
+                    <input type="hidden" name="solicitacaoId" th:value="${solicitacao.id}">
+                    <button class="button" type="submit">Aprovar</button>
+                </form>
+
+                <form action="/admin/solicitacao/rejeitar" method="post">
+                    <input type="hidden" name="solicitacaoId" th:value="${solicitacao.id}">
+                    <button class="button danger" type="submit">Rejeitar</button>
+                </form>
+            </div>
+        </div>
+
+        <p class="subtitle" th:if="${#lists.isEmpty(solicitacoesPendentes)}">
+            Nenhuma solicitação de adoção pendente.
+        </p>
+    </section>
+</main>
+
+</body>
+</html>

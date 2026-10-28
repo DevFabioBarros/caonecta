@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Pesquisar Animal</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+
+<main class="page page-list">
+    <section class="card list-card">
+        <h1>Animais disponíveis</h1>
+
+        <div class="top-links">
+
+            <!-- ADMIN -->
+            <div th:if="${session.tipoUsuario != null && session.tipoUsuario.name() == 'ADMINISTRADOR'}">
+                <a class="link" href="/admin">Painel administrativo</a>
+                <a class="link" href="/pesquisar-animal">Pesquisar animais</a>
+                <a class="link" href="/logout">Sair</a>
+            </div>
+
+            <!-- USUÁRIO -->
+            <div th:if="${session.tipoUsuario != null && session.tipoUsuario.name() == 'USUARIO'}">
+                <a class="link" href="/perfil">Meu perfil</a>
+                <a class="link" href="/cadastrar-animal">Cadastrar animal</a>
+                <a class="link" href="/minhas-solicitacoes">Minhas solicitações</a>
+                <a class="link" href="/logout">Sair</a>
+            </div>
+
+            <!-- VISITANTE -->
+            <div th:if="${session.tipoUsuario == null}">
+                <a class="link" href="/login">Entrar</a>
+                <a class="link" href="/cadastro-usuario">Criar conta</a>
+            </div>
+
+        </div>
+
+        <form class="search-form" action="/pesquisar-animal" method="get">
+            <input type="text" name="nome" placeholder="Nome" th:value="${nome}">
+            <input type="text" name="especie" placeholder="Espécie" th:value="${especie}">
+            <input type="text" name="raca" placeholder="Raça" th:value="${raca}">
+
+            <button class="button" type="submit">
+                Pesquisar
+            </button>
+
+            <a class="button secondary" href="/pesquisar-animal">
+                Limpar filtros
+            </a>
+        </form>
+
+        <div class="animal-list">
+            <article class="animal-list-item resumo-animal" th:each="animal : ${animais}">
+                <img th:src="${animal.urlFoto}" alt="Foto do animal">
+
+                <div class="animal-list-info">
+                    <h2 th:text="${animal.nome}">Nome</h2>
+
+                    <p>
+                        <strong>Espécie:</strong>
+                        <span th:text="${animal.especie}"></span>
+                    </p>
+
+                    <p>
+                        <strong>Raça:</strong>
+                        <span th:text="${animal.raca}"></span>
+                    </p>
+
+                    <a class="button" th:href="@{/visualizar-animal(animalId=${animal.id})}">
+                        Ver detalhes
+                    </a>
+                </div>
+            </article>
+        </div>
+
+        <p class="subtitle" th:if="${#lists.isEmpty(animais)}">
+            Nenhum animal encontrado.
+        </p>
+    </section>
+</main>
+
+</body>
+</html>

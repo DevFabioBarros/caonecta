@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Meu Perfil</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+
+<main class="page">
+    <section class="card">
+        <h1>Meu Perfil</h1>
+
+        <p class="sucesso" th:if="${param.sucesso}">
+            Perfil atualizado com sucesso!
+        </p>
+
+        <form action="/perfil" method="post">
+            <label>Nome completo</label>
+            <input type="text" name="nomeCompleto" th:value="${usuario.nomeCompleto}" required>
+
+            <label>Telefone</label>
+            <input type="text" name="telefone" th:value="${usuario.telefone}" required>
+
+            <label>Email</label>
+            <input type="email" name="email" th:value="${usuario.email}" required>
+
+            <div class="actions">
+                <button class="button" type="submit">Salvar alterações</button>
+                <a class="link" href="/pesquisar-animal">Voltar</a>
+            </div>
+        </form>
+        <form action="/perfil/desativar" method="post">
+            <div class="actions">
+                <button class="button danger" type="submit">
+                    Excluir perfil
+                </button>
+            </div>
+        </form>
+    </section>
+</main>
+
+</body>
+</html>

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Login - Caonecta</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+
+<main class="page">
+    <section class="card">
+        <h1>Caonecta</h1>
+        <p class="subtitle">Entre para encontrar ou ajudar um animal.</p>
+
+        <p class="erro" th:if="${erro}" th:text="${erro}"></p>
+
+        <p class="erro" th:if="${param.perfilExcluido}">
+            Seu perfil foi excluído. Se deseja recuperá-lo, contate o administrador: admin@caonecta.com.
+        </p>
+
+        <form action="/login" method="post">
+            <label>Email</label>
+            <input type="email" name="email" required>
+
+            <label>Senha</label>
+            <input type="password" name="senha" required>
+
+            <div class="actions">
+                <button class="button" type="submit">Entrar</button>
+                <a class="link" href="/cadastro-usuario">Criar conta</a>
+            </div>
+        </form>
+    </section>
+</main>
+
+</body>
+</html>

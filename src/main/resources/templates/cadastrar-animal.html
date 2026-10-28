@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Cadastrar Animal</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+
+<main class="page">
+    <section class="card">
+        <h1>Cadastrar Animal</h1>
+        <p class="subtitle">Ajude um animal a encontrar um novo lar.</p>
+
+        <form action="/cadastrar-animal" method="post" enctype="multipart/form-data">
+
+            <label for="nome">Nome do animal</label>
+            <input id="nome" name="nome" type="text" required>
+
+            <label for="especie">Espécie</label>
+            <input id="especie" name="especie" type="text" required placeholder="Ex: cachorro ou gato">
+
+            <label for="raca">Raça</label>
+            <input id="raca" name="raca" type="text" required placeholder="Ex: vira-lata">
+
+            <label for="idade">Idade</label>
+
+            <input
+                type="number"
+                id="idade"
+                name="idade"
+                min="0"
+                max="25"
+                placeholder="Deixe vazio se não souber"
+            >
+
+            <label for="descricao">Descrição</label>
+            <textarea id="descricao" name="descricao" rows="5" required placeholder="Conte um pouco sobre o animal."></textarea>
+
+            <label for="foto">Foto do animal</label>
+            <small>Imagem obrigatória. Mínimo 300x300px, máximo 4000x4000px e até 5MB.</small>
+            <input id="foto" name="foto" type="file" accept="image/*" required>
+
+            <div class="actions">
+                <button class="button" type="submit">Cadastrar animal</button>
+                <a class="link" href="/pesquisar-animal">Cancelar</a>
+            </div>
+        </form>
+    </section>
+</main>
+
+</body>
+</html>

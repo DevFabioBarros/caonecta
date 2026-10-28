@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Histórico Administrativo</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+
+<main class="page page-list">
+    <section class="card list-card">
+        <h1>Histórico Administrativo</h1>
+
+        <div class="top-links">
+            <div>
+                <a class="link" href="/admin">Painel administrativo</a>
+                <a class="link" href="/pesquisar-animal">Pesquisar animais</a>
+                <a class="link" href="/logout">Sair</a>
+            </div>
+        </div>
+
+        <h2>Usuários</h2>
+
+        <div class="admin-list">
+            <div class="admin-item" th:each="usuario : ${usuarios}">
+                <div>
+                    <strong th:text="${usuario.nomeCompleto}">Usuário</strong>
+                    <p><strong>Email:</strong> <span th:text="${usuario.email}"></span></p>
+
+                    <p th:if="${usuario.ativo && usuario.aprovado}">
+                        <strong>Status:</strong> aprovado
+                    </p>
+
+                    <p th:if="${usuario.ativo && !usuario.aprovado}">
+                        <strong>Status:</strong> pendente
+                    </p>
+
+                    <p th:if="${!usuario.ativo && !usuario.aprovado}">
+                        <strong>Status:</strong> rejeitado
+                    </p>
+
+                    <p th:if="${!usuario.ativo && usuario.aprovado}">
+                        <strong>Status:</strong> perfil excluído/desativado
+                    </p>
+
+                    <a class="link" th:href="@{/admin/usuario/detalhes(usuarioId=${usuario.id})}">
+                        Ver detalhes
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <h2>Animais</h2>
+
+        <div class="admin-list">
+            <div class="admin-item" th:each="animal : ${animais}">
+                <img class="admin-thumb" th:src="${animal.urlFoto}" alt="Animal">
+
+                <div>
+                    <strong th:text="${animal.nome}">Animal</strong>
+                    <p><strong>Espécie:</strong> <span th:text="${animal.especie}"></span></p>
+
+                    <p th:if="${!animal.aprovado}">
+                        <strong>Status:</strong> pendente
+                    </p>
+
+                    <p th:if="${animal.aprovado && !animal.adotado}">
+                        <strong>Status:</strong> aprovado
+                    </p>
+
+                    <p th:if="${animal.aprovado && animal.adotado}">
+                        <strong>Status:</strong> adotado
+                    </p>
+
+                    <a class="link" th:href="@{/admin/animal/detalhes(animalId=${animal.id})}">
+                        Ver detalhes
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <h2>Solicitações de adoção</h2>
+
+        <div class="admin-list">
+            <div class="admin-item" th:each="solicitacao : ${solicitacoes}">
+                <img class="admin-thumb" th:src="${solicitacao.animal.urlFoto}" alt="Animal">
+
+                <div>
+                    <strong th:text="${solicitacao.animal.nome}">Animal</strong>
+
+                    <p>
+                        <strong>Solicitante:</strong>
+                        <span th:text="${solicitacao.usuario.nomeCompleto}"></span>
+                    </p>
+
+                    <p>
+                        <strong>Status:</strong>
+                        <span th:text="${solicitacao.statusSolicitacao}"></span>
+                    </p>
+
+                    <a class="link" th:href="@{/admin/solicitacao/detalhes(solicitacaoId=${solicitacao.id})}">
+                        Ver detalhes
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+
+</body>
+</html>
